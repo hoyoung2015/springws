@@ -1,0 +1,26 @@
+var tasks = [
+{title:"一个只有扫码前置规则的单独任务",
+		score:10,
+		difficulty:4,
+		info:"不需要地理位置验证，需要道具二和道具三，第一个关键词beijing",
+		lng:116.412743,
+		lat:39.943042,
+		rules:[
+				{
+					type:1,
+					positiveFeedback:"TEXT:恭喜你，道具验证通过！",
+					meta:"2,3"
+				},
+				{
+					type:4,
+					positiveFeedback:"TEXT:恭喜你，扫码验证通过！",
+					meta:"扫码规则"
+				},
+				{
+					type:8,
+					negativeFeedback:"TEXT:你答错了哦！",
+					positiveFeedback:"TEXT:恭喜你，答对了！",
+					meta:"beijing"
+				}
+		       ]
+}]

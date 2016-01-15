@@ -8,25 +8,18 @@ package net.hoyoung.springws.ws.handler;
 
 import java.io.IOException;
 
+import net.hoyoung.springws.entity.User;
+import net.hoyoung.springws.ws.domain.SessionContext;
+import net.hoyoung.springws.ws.domain.Request;
+import net.hoyoung.springws.ws.util.WebSockedUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.wiipu.dao.mapper.UserMapper;
-import com.wiipu.entity.User;
-import com.wiipu.service.UserService;
-import com.wiipu.ws.domain.GameContext;
-import com.wiipu.ws.domain.Request;
-import com.wiipu.ws.domain.Response;
-import com.wiipu.ws.domain.ResponseStatus;
-import com.wiipu.ws.handler.impl.AbortTaskHandler;
-import com.wiipu.ws.util.WebSockedUtils;
 
 /**
  *
@@ -34,30 +27,14 @@ import com.wiipu.ws.util.WebSockedUtils;
 @Component
 public class SystemWebSocketHandler implements WebSocketHandler {
     
-	private Logger log = Logger.getLogger(SystemWebSocketHandler.class);
-    @SuppressWarnings("unused")
-	private UserMapper userMapper;
-	private WebSockedUtils wsUtils;
+	private Logger log = Logger.getLogger(getClass());
+    @Autowired
 	private RequestDispatcher requestDispatcher;
-	@Autowired
-	public void setWsUtils(WebSockedUtils wsUtils) {
-		this.wsUtils = wsUtils;
-	}
-	@Autowired
-	public void setRequestDispatcher(RequestDispatcher requestDispatcher) {
-		this.requestDispatcher = requestDispatcher;
-	}
-
-	@Autowired
-    public void setUserMapper(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
-
 	@Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		log.info("WebSocketSession ID:"+session.getId());
 		log.info(session.getHandshakeHeaders().toString());
-        log.info("connect to the websocket success......");
+        log.info("成功连接websocket");
     }
 	/**
 	 * 
@@ -66,11 +43,11 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     public void handleMessage(WebSocketSession wss, WebSocketMessage<?> wsm) {
     	log.info("WebSocketSession ID:"+wss.getId());
     	log.info("服务器接收到的json:"+wsm.getPayload());
-		Request request = this.wsUtils.getRequestFromJson(wsm.getPayload().toString());
+		Request request = WebSockedUtils.getRequestFromJson(wsm.getPayload().toString());
 		/**
 		 * 检验签名
 		 */
-		if(!this.wsUtils.isAccess(request)){
+		if(!WebSockedUtils.isAccess(request)){
 			/**
 			 * 校验失败，关闭当前连接
 			 */
@@ -84,13 +61,12 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 			/**
 			 * 分发处理
 			 */
+            log.info("分发处理"+request.getMethod());
 			this.requestDispatcher.dispatch(wss, request);
 		}
     	log.info("SystemWebSocketHandler:"+this.hashCode());
     	log.info("WebSocketSession:"+wss.hashCode());
     }
-    @Autowired
-    private UserService userService;
 	@Override
     public void handleTransportError(WebSocketSession wss, Throwable thrwbl) throws Exception {
         if(wss.isOpen()){
@@ -98,8 +74,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         }
        log.info("websocket connection closed......");
     }
-	@Autowired
-	private GameContext gameContext;
+	private SessionContext gameContext;
     @Override
     public void afterConnectionClosed(WebSocketSession wss, CloseStatus cs) throws Exception {
     	/**
@@ -109,7 +84,6 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         //将用户持久到数据库
         User user = (User) wss.getAttributes().get("user");
         if(user != null){
-        	userService.updateUser(user);
         	//将用户session移除
         	gameContext.removeWebSocketSession(wss);
         }

@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<!--defaultCSS-->
+<title>接口文档</title>
+<style type="text/css" id="wiz_todo_style_id"
+	wiz_link_version="01.00.09">
+.wiz-todo, .wiz-todo-img {
+	width: 16px;
+	height: 16px;
+	cursor: default;
+	padding: 0 10px 0 2px;
+	vertical-align: -10%;
+	-webkit-user-select: none;
+}
+
+.wiz-todo-label {
+	display: inline-block;
+	padding-top: 7px;
+	padding-bottom: 6px;
+	line-height: 1.5;
+}
+
+.wiz-todo-label-checked {
+	color: #666;
+}
+
+.wiz-todo-label-unchecked {
+	text-decoration: initial;
+}
+
+.wiz-todo-completed-info {
+	padding-left: 44px;
+	display: inline-block;
+}
+
+.wiz-todo-avatar {
+	width: 20px;
+	height: 20px;
+	vertical-align: -20%;
+	margin-right: 10px;
+	border-radius: 2px;
+}
+
+.wiz-todo-account, .wiz-todo-dt {
+	color: #666;
+}
+</style>
+
+
+
+
+<style type="text/css" id="wiz_custom_css">
+body {
+	font-family: "Microsoft YaHei UI", "Microsoft YaHei", SimSun, "Segoe UI",
+		Tahoma, Helvetica, Sans-Serif, "Microsoft YaHei", Georgia, Helvetica,
+		Arial, sans-serif, 宋体, PMingLiU, serif;
+	font-size: 10.5pt;
+	line-height: 1.5;
+}
+
+html, body {
+	
+}
+
+h1 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+h4 {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+h5 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+h6 {
+	font-size: 1.0em;
+	font-weight: bold;
+}
+
+img {
+	border: 0;
+	max-width: 100%;
+	height: auto !important;
+}
+
+blockquote {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+table {
+	border-collapse: collapse;
+	border: 1px solid #bbbbbb;
+}
+
+td {
+	border-collapse: collapse;
+	border: 1px solid #bbbbbb;
+}
+</style>
+</head>
+<body style="">
+	<h2>奥秘城市V2客户端接口文档</h2>
+	<div>
+		<div>
+			<ul>
+				<li>通信协议：websocket，安卓客户端使用autobahn开源websocket通信库，服务器使用Spring(4.1.5)
+					WebSocket API</li>
+				<li>请求响应框架：服务器和客户端分别基于websocket构建的Request,Response请求响应框架。通信时双向的，服务器构建Request的处理框架，客户端构建Response的响应框架。</li>
+			</ul>
+		</div>
+	</div>
+	<div>
+		<ol>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><span
+					style="font-size: 10.5pt; line-height: 1.5;"><a href="#注册接口">注册
+							register</a></span></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><span
+					style="font-size: 10.5pt; line-height: 1.5;"><a href="#登陆接口">登陆
+							login</a></span></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#加能量">加能量&nbsp;addEnergy</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#更新头像">更新头像&nbsp;updateAvatar</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#刷新位置接口">刷新位置接口 freshLocation（暂定5秒为周期）</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#获取周边能量点可能出现的地点集合">获取周边能量点可能出现的地点集合&nbsp;getEnergyPoints</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#7.获取周边可接受的任务 getTaskView">获取周边可接受的任务&nbsp;getTaskView</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#8.接受地图上的任务 acceptTask">接受地图上的任务&nbsp;acceptTask</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#9.放弃任务 abortTask">放弃任务&nbsp;abortTask</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#10.消息界面答题 answerTask">消息界面答题&nbsp;answerTask</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#11.装备道具接口 equipProperty">装备道具接口&nbsp;equipProperty</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#12.获取道具列表 listProperty">获取道具列表&nbsp;listProperty</a></strong><br></li>
+			<li><strong style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#13.任务推送 taskPush">任务推送&nbsp;taskPush <span
+						style="color: #ff6820">注：此接口不需要请求，服务器主动通知，客户端写好response回调即可</span></a></strong><br></li>
+			<li><b style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#14.扫码 scanPrevRule">扫码 scanPrevRule</a></b><br></li>
+			<li><b style="font-size: 10.5pt; line-height: 1.5;"><a
+					href="#15.新任务在线推送接口 newTasks">新任务在线推送接口&nbsp;newTasks</a></b><br></li>
+			<li><a href="#16.已接受任务消息推送 taskMsg"
+				style="font-size: 10.5pt; line-height: 1.5;"><b>已接受任务消息推送
+						taskMsg</b></a><br></li>
+		</ol>
+		<p style="font-size: 10.5pt; line-height: 1.5;"></p>
+		<p style="font-size: 10.5pt; line-height: 1.5;"></p>
+		<div>
+			<hr>
+		</div>
+		<a wiznote_tag="windows_bookmark" wiznote_add_time="1431064690060"
+			name="注册接口"></a>
+		<div>
+			<strong style="background-color: rgb(0, 204, 255);">1.注册
+				register</strong>
+		</div>
+		<div>
+			<strong>Request：</strong>
+		</div>
+		<div>
+			<strong><span style="color: #ff6820">如果为游客开始游戏，下属字段置为空串</span></strong>
+		</div>
+		<div>
+			<table cellspacing="0" cellpadding="0" style="width: 100%;">
+				<tbody>
+					<tr class="firstRow"></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div>
+		<ul class=" list-paddingleft-2">
+			<li><p>username，字符串，用户昵称</p></li>
+			<li><p>photo，字符串，头像url链接地址</p></li>
+			<li><p>openId，字符串，微信或QQ的openId</p></li>
+		</ul>
+		<div>
+			<strong>Response：</strong>
+		</div>
+	</div>
+	<div>
+		<span style="font-size: 10.5pt; line-height: 1.5;">status返回200，注册成功</span>
+	</div>
+	<div>
+		<ul class=" list-paddingleft-2">
+			<li><p>userId 整型，用户唯一id</p>
+				<p>
+					新注册的用户服务器会返回给客户端的用户标识码（就是数据库表中用户表的自增主键）<br>
+				</p></li>
+		</ul>
+	</div>
+	<span style="font-size: 10.5pt; line-height: 1.5;"><span
+		style="color: #ff0000"><br></span></span>
+	<div>
+		<hr>
+	</div>
+	<a wiznote_tag="windows_bookmark" wiznote_add_time="1431064681932"
+		name="登陆接口"></a>
+	<div>
+		<strong style="background-color: rgb(0, 204, 255);">2.登陆接口，<span
+			style="font-size: 10.5pt; line-height: 1.5;">method: login</span></strong>
+	</div>
+	<div>
+		<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+				:</strong></span>
+	</div>
+	<div>
+		<ul class=" list-paddingleft-2">
+			<li><p>
+					<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+				</p>
+				<p>
+					<span style="font-size: 10.5pt; line-height: 1.5;">新注册的用户服务器会返回给客户端的用户标识码（就是数据库表中用户表的自增主键）</span>
+				</p></li>
+		</ul>
+		<div>
+			<strong>Response：</strong><br>
+		</div>
+		<div>
+			status返回100，用户不存在<br>
+		</div>
+		<div>
+			status返回101，用户已登录<br>
+		</div>
+		<div>
+			status返回200，登陆成功<br>
+		</div>
+		<div>
+			<ul>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">username，字符串（<font
+						color="#ff6820">需要url编码</font>），用户昵称
+				</span><br></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">photo，字符串，头像路径</span><br></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">score，整形，积分</span><br></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">energy，整形，能量值</span><br>
+				<p></p></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">coupons，整型，优惠券</span><br></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">level，整型，等级</span><br></li>
+				<li style="text-align: left;"><span
+					style="font-size: 10.5pt; line-height: 1.5;">upgradeGap，整型，升级所需的经验值</span><br></li>
+			</ul>
+			<p style="font-size: 10.5pt; line-height: 1.5;"></p>
+		</div>
+		<div>
+			<div>
+				<hr>
+			</div>
+			<a wiznote_tag="windows_bookmark" wiznote_add_time="1431064671431"
+				name="更新头像"></a><a wiznote_tag="windows_bookmark"
+				wiznote_add_time="1431064728426" name="加能量"></a>
+			<div>
+				<strong style="background-color: rgb(0, 204, 255);">3.加能量，<span
+					style="font-size: 10.5pt; line-height: 1.5;">method:
+						addEnergy</span></strong>
+			</div>
+			<div>
+				<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+						:</strong></span>
+			</div>
+			<div>
+				<ul class=" list-paddingleft-2">
+					<li><p>
+							<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+						</p></li>
+					<li><p>
+							<span style="font-size: 10.5pt; line-height: 1.5;">energy，整型，能量值</span>
+						</p>
+						<p>客户端自己从随机点集中产生能量点的位置，自己收集能量点，然后将收集的能量增加值同步给服务器</p></li>
+				</ul>
+				<div>
+					<strong>Response：</strong>
+				</div>
+			</div>
+			<div>服务器不响应</div>
+			<hr>
+			<a wiznote_tag="windows_bookmark" wiznote_add_time="1431064739036"
+				name="更新头像"></a><span style="background-color: rgb(0, 204, 255);"><strong>4.更新头像，method:
+					updateAvatar</strong></span>
+		</div>
+		<div>
+			<div>
+				<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+						:</strong></span>
+			</div>
+			<div>
+				<ul class=" list-paddingleft-2">
+					<li><p>
+							<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+						</p></li>
+					<li><p>
+							<span style="font-size: 10.5pt; line-height: 1.5;">photoBase64，字符串，base64编码的图片</span>
+						</p></li>
+				</ul>
+				<div>
+					<strong>Response：</strong>
+				</div>
+			</div>
+			<div>
+				status返回200，修改成功<strong><br></strong>
+			</div>
+			<div>
+				status返回500，修改失败（几率很小）<br>
+			</div>
+			<div>
+				<hr>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431137532309"
+					name="刷新位置接口"></a><strong
+					style="background-color: rgb(0, 204, 255);">5.<span
+					style="font-size: 10.5pt; line-height: 1.5;">刷新位置接口，</span><span
+					style="font-size: 10.5pt; line-height: 1.5;">method:&nbsp;</span><span
+					style="font-size: 10.5pt; line-height: 1.5;">freshLocation（客户端自己定，暂定5秒为周期）</span></strong>
+			</div>
+			<div>
+				<div>
+					<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+							:</strong></span>
+				</div>
+				<div>
+					<ul class=" list-paddingleft-2">
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+							</p></li>
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">lng，6位小数的浮点数，用户经度</span>
+							</p></li>
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">lat，</span>6位小数的浮点数，用户纬度
+							</p></li>
+					</ul>
+					<div>
+						<strong>Response：</strong>
+					</div>
+				</div>
+				<div>无需响应</div>
+			</div>
+			<div>
+				<hr>
+			</div>
+			<a wiznote_tag="windows_bookmark" wiznote_add_time="1431137569974"
+				name="获取周边能量点可能出现的地点集合"></a>
+			<div>
+				<strong style="background-color: rgb(0, 204, 255);">6.获取周边能量点可能出现的地点集合&nbsp;getEnergyPoints</strong><br>
+			</div>
+			<div>
+				<div>
+					<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+							:</strong></span>
+				</div>
+				<div>
+					<ul class=" list-paddingleft-2">
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+							</p></li>
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">lng，6位小数的浮点数，用户经度</span>
+							</p></li>
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">lat，</span>6位小数的浮点数，用户纬度
+							</p></li>
+					</ul>
+					<div>
+						<strong>Response：</strong>
+					</div>
+				</div>
+				<div>
+					status返回200<br>
+				</div>
+			</div>
+			<div>
+				<ul>
+					<li><span style="font-size: 10.5pt; line-height: 1.5;">points
+							经纬度map数组，能量点集的经纬度</span></li>
+				</ul>
+				<div>示例：</div>
+			</div>
+			<div>
+				"<span style="font-size: 10.5pt; line-height: 1.5;">points</span><span
+					style="font-size: 10.5pt; line-height: 1.5;">"：[</span>
+			</div>
+			<div>
+				<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+					{"lng":108.123456,"lat":34.132564},</span><br>
+			</div>
+			<div>
+				<span
+					style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+					&nbsp;&nbsp;</span><span style="font-family: 'Microsoft YaHei UI';">{"lng":108.123456,"lat":34.132564},</span><span
+					style="font-family: Microsoft YaHei UI"><br></span>
+			</div>
+			<div>
+				<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+					......</span><span style="font-family: 'Microsoft YaHei UI';"><br></span>
+			</div>
+			<div>]</div>
+			<div>能量点可能出现地点的点集</div>
+			<div>
+				<hr>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431420333274"
+					name="7.获取周边可接受的任务 getTaskView"></a><span
+					style="background-color: rgb(0, 204, 255);">7.<span
+					style="font-size: 10.5pt; line-height: 1.5;">获取周边可接受的任务&nbsp;getTaskView</span></span><br>
+			</div>
+			<div>
+				<div>
+					<div>
+						<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+								:</strong></span>
+					</div>
+					<div>
+						<ul class=" list-paddingleft-2">
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">lng，6位小数的浮点数，用户经度</span>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">lat，</span>6位小数的浮点数，用户纬度
+								</p></li>
+							<li><p>type，字符串，任务类型，有三种可选："ACCEPT","VIEW","DUMPED"，分别表示已接受，任务视图，已放弃的任务</p></li>
+						</ul>
+						<div>
+							<strong>Response：</strong>
+						</div>
+					</div>
+					<div>
+						status返回200<br>
+					</div>
+				</div>
+				<div>
+					<ul>
+						<li>type，字符串，任务种类，值与request中的type一致，客户端据此判断任务类型</li>
+						<li>tasks，任务数组</li>
+					</ul>
+					<div>tasks示例：</div>
+				</div>
+				<div>
+					"<span style="font-size: 10.5pt; line-height: 1.5;">tasks</span><span
+						style="font-size: 10.5pt; line-height: 1.5;">"：[</span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; {</span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+						taskId，整型，任务id</span><span style="font-family: Microsoft YaHei UI"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">title，字符串，任务标题</span><span
+						style="font-family: Microsoft YaHei UI"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+						info，字符串，介绍</span><span style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<p>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">difficulty，整型，任务难度</span>
+				</p>
+				<p>
+					<span style="font-size: 10.5pt; line-height: 1.5;">&nbsp;&nbsp;&nbsp;&nbsp;clues，字符串，任务线索<br></span>
+				</p>
+				<p>
+					<span style="font-size: 10.5pt; line-height: 1.5;">&nbsp;&nbsp;&nbsp;&nbsp;<span
+						style="white-space: normal;">taskType，整型，1表示线上，0表示线下</span></span>
+				</p>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">score，整型，积分</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+						lng，float型，任务地点经度</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+						lat，float型，任务地点纬度</span><span style="font-family: Microsoft YaHei UI"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">},</span>
+				</div>
+				<div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">{</span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">taskId，整型，任务id</span><span
+							style="font-family: Microsoft YaHei UI"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">title，字符串，任务标题</span><span
+							style="font-family: Microsoft YaHei UI"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+							info，字符串，介绍</span><span style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<p>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">difficulty，整型，任务难度</span>
+					</p>
+					<p>
+						<span style="font-size: 10.5pt; line-height: 1.5;"></span>
+					</p>
+					<p style="white-space: normal;">
+						<span style="font-size: 10.5pt; line-height: 1.5;">&nbsp;&nbsp;&nbsp;&nbsp;clues，字符串，任务线索<br></span>
+					</p>
+					<p style="white-space: normal;">
+						<span style="font-size: 10.5pt; line-height: 1.5;">&nbsp;&nbsp;&nbsp;&nbsp;taskType，整型，1表示线上，0表示线下</span>
+					</p>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">score，整型，积分</span><span
+							style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+							lng，float型，任务地点经度</span><span
+							style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+							lat，float型，任务地点纬度</span><span style="font-family: Microsoft YaHei UI"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">}</span>
+					</div>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp; &nbsp;
+						......</span><span style="font-family: 'Microsoft YaHei UI';"><br></span>
+				</div>
+				<div>]</div>
+			</div>
+			<div>
+				<hr>
+			</div>
+			<div>
+				<span style="background-color: rgb(0, 204, 255);"><a
+					wiznote_tag="windows_bookmark" wiznote_add_time="1431421858073"
+					name="8.接受地图上的任务&nbsp;acceptTask"></a>8.接受地图上的任务&nbsp;acceptTask</span><br>
+			</div>
+			<div>
+				<div>
+					<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+							:</strong></span>
+				</div>
+				<div>
+					<ul class=" list-paddingleft-2">
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+							</p></li>
+						<li><p>
+								<span style="font-size: 10.5pt; line-height: 1.5;">taskId，整型，任务id</span>
+							</p></li>
+					</ul>
+					<div>
+						<strong>Response：</strong>
+					</div>
+				</div>
+				<div>status返回200 处理成功</div>
+			</div>
+			<div>无数据</div>
+			<div>
+				<hr>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431655064215"
+					name="9.放弃任务 abortTask"></a><span
+					style="background-color: rgb(0, 204, 255);">9.放弃任务 abortTask</span><br>
+			</div>
+			<div>
+				<div>
+					<div>
+						<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+								:</strong></span>
+					</div>
+					<div>
+						<ul class=" list-paddingleft-2">
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">taskId，整型，任务id</span>
+								</p></li>
+						</ul>
+						<div>
+							<strong>Response：</strong>
+						</div>
+					</div>
+					<div>status返回200 处理成功</div>
+				</div>
+				<div>无数据</div>
+			</div>
+			<div>
+				<hr>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431655402351"
+					name="10.消息界面答题 answerTask"></a><span
+					style="background-color: rgb(0, 204, 255);">10.消息界面答题
+					answerTask</span><br>
+			</div>
+			<div>
+				<div>
+					<div>
+						<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+								:</strong></span>
+					</div>
+					<div>
+						<ul class=" list-paddingleft-2">
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">taskId，整型，解密任务id</span>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">content，字符串，输入的内容</span>
+								</p></li>
+						</ul>
+						<div>
+							<strong>Response：</strong>
+						</div>
+					</div>
+					<div>status返回403 没有权限答题，即前置规则没有通过</div>
+				</div>
+				<div>
+					status返回200 答题成功，但是答错还是答对都返回200，具体从反馈回复里看<br>
+				</div>
+				<div>
+					<ul>
+						<li><span style="font-size: 10.5pt; line-height: 1.5;">reply，map数组，返回的html消息</span><br></li>
+					</ul>
+					<div>示例：</div>
+				</div>
+			</div>
+			<div>
+				"<span style="font-size: 10.5pt; line-height: 1.5;">reply</span><span
+					style="font-size: 10.5pt; line-height: 1.5;">" : [</span>
+			</div>
+			<div>{"html":"html文本1"},</div>
+			<div>
+				{"html":"html文本2"},<br>
+			</div>
+			<div>...</div>
+			<div>]</div>
+			<div>
+				<hr>
+				<span style="background-color: rgb(0, 204, 255);"><a
+					wiznote_tag="windows_bookmark" wiznote_add_time="1431655520888"
+					name="11.装备道具接口 equipProperty"></a>11.<span
+					style="font-size: 10.5pt; line-height: 1.5;">装备道具接口
+						equipProperty</span></span><br>
+			</div>
+			<div>
+				<div>
+					<div>
+						<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+								:</strong></span>
+					</div>
+					<div>
+						<ul class=" list-paddingleft-2">
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">targetId，整型，要被替换的那个道具的id</span>
+								</p></li>
+							<li><p>
+									<span style="font-size: 10.5pt; line-height: 1.5;">replaceId，字符串，要装备的道具的id<br></span>
+								</p></li>
+						</ul>
+						<p>
+							<span
+								style="font-size: 10.5pt; line-height: 1.5; color: rgb(255, 0, 0);">注：如果已装备的道具没有满（默认是2个道具槽），targetId和replaceId写成一样，该道具就会装备到空的道具槽</span>
+						</p>
+						<div>
+							<strong>Response：</strong>
+						</div>
+					</div>
+				</div>
+				<div>status返回200 装备成功</div>
+			</div>
+			<div>无数据</div>
+			<div>
+				<hr>
+			</div>
+			<div>
+				<span style="background-color: rgb(0, 204, 255);"><a
+					wiznote_tag="windows_bookmark" wiznote_add_time="1431655769455"
+					name="12.获取道具列表 listProperty"></a>12.获取道具列表 listProperty</span><br>
+			</div>
+			<div>
+				<div>
+					<div>
+						<div>
+							<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+									:</strong></span>
+						</div>
+						<div>
+							<ul class=" list-paddingleft-2">
+								<li><p>
+										<span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span>
+									</p></li>
+							</ul>
+							<div>
+								<strong>Response：</strong>
+							</div>
+						</div>
+					</div>
+					<div>status返回200 成功</div>
+				</div>
+			</div>
+			<div>
+				<ul>
+					<li>equipedProperties ，用户<font color="#ff6820">已装备</font>道具数组<br></li>
+				</ul>
+				<div>示例：</div>
+			</div>
+			<div>
+				<div>
+					"<span style="font-size: 10.5pt; line-height: 1.5;">equipedProperties</span><span
+						style="font-size: 10.5pt; line-height: 1.5;">&nbsp;</span><span
+						style="font-size: 10.5pt; line-height: 1.5;">": [ &nbsp;
+						&nbsp; &nbsp; &nbsp; //道具数组，玩家已经装备的道具</span>
+				</div>
+				<div>&nbsp; &nbsp; {</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp; id，整型，道具id</span><br>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">name，字符串，道具名称</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">info，道具信息</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">level，整型，道具等级</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">photo，字符串，道具图片</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>&nbsp; &nbsp; },</div>
+				<div>&nbsp;&nbsp;&nbsp; ......</div>
+				<div>]</div>
+			</div>
+			<div>
+				<ul>
+					<li>userProperties，用户拥有的<font color="#ff6820">未装备</font>道具数组<br></li>
+				</ul>
+				<div>示例：</div>
+			</div>
+			<div>
+				<div>
+					"<span style="font-size: 10.5pt; line-height: 1.5;">userProperties</span><span
+						style="font-size: 10.5pt; line-height: 1.5;">": [ &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //道具数组，玩家拥有但没有装备的道具</span>
+				</div>
+				<div>&nbsp; &nbsp; {</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp; id，整型，道具id</span><br>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">name，字符串，道具名称</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">info，道具信息</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">level，整型，道具等级</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>
+					<span style="font-family: Microsoft YaHei UI">&nbsp;
+						&nbsp;&nbsp;</span><span
+						style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+						&nbsp;&nbsp;</span><span style="font-size: 10.5pt; line-height: 1.5;">photo，字符串，道具图片</span><span
+						style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+				</div>
+				<div>&nbsp; &nbsp; },</div>
+				<div>&nbsp;&nbsp;&nbsp; ......</div>
+				<div>]</div>
+			</div>
+			<div>
+				<hr>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431657040401"
+					name="13.任务推送 taskPush"></a><span
+					style="background-color: rgb(0, 204, 255);">13.任务推送 taskPush</span><br>
+			</div>
+			<div>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431657040401"
+					style="background-color: rgb(255, 255, 255);"
+					name="13.任务推送 taskPush"></a>说明：此接口是在服务器检测到接受的任务有前置规则通过的时候发送的
+			</div>
+			<div>
+				<a wiznote_tag="windows_bookmark" wiznote_add_time="1431657040401"
+					style="background-color: rgb(0, 204, 255);" name="13.任务推送 taskPush"></a>
+				<div>
+					<div>
+						<strong>Response：</strong>
+					</div>
+					<div>status返回200&nbsp;</div>
+				</div>
+				<div>
+					<ul>
+						<li>tasks，任务数组<br></li>
+					</ul>
+					<div>示例：</div>
+				</div>
+				<div>
+					<div>
+						"<span style="font-size: 10.5pt; line-height: 1.5;">tasks</span><span
+							style="font-size: 10.5pt; line-height: 1.5;">": [ &nbsp;
+							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //推送的任务数组</span>
+					</div>
+					<div>&nbsp; &nbsp; {</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+							&nbsp; id，整型，任务id</span><br>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+							&nbsp;&nbsp;</span>title<span
+							style="font-size: 10.5pt; line-height: 1.5;">，字符串，任务标题</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+							&nbsp;&nbsp;</span>score，整型，任务积分<span
+							style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+							&nbsp;&nbsp;</span>info<span
+							style="font-size: 10.5pt; line-height: 1.5;">，字符串，任务信息</span><span
+							style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>
+						<span style="font-family: Microsoft YaHei UI">&nbsp;
+							&nbsp;&nbsp;</span><span
+							style="font-family: 'Microsoft YaHei UI'; font-size: 10.5pt; line-height: 1.5;">&nbsp;
+							&nbsp;&nbsp;</span>difficulty<span
+							style="font-size: 10.5pt; line-height: 1.5;">，整型，任务难度</span><span
+							style="font-size: 10.5pt; line-height: 1.5;"><br></span>
+					</div>
+					<div>&nbsp; &nbsp; },</div>
+					<div>&nbsp;&nbsp;&nbsp; ......</div>
+					<div>]</div>
+				</div>
+			</div>
+			<hr>
+			<a wiznote_tag="windows_bookmark" wiznote_add_time="1432275292594"
+				name="14.扫码 scanPrevRule"
+				style="background-color: rgb(0, 204, 255);">14.扫码 scanPrevRule</a><br>
+		</div>
+	</div>
+	<div>
+		<div>
+			<span style="font-size: 10.5pt; line-height: 1.5;"><strong>Request
+					:</strong></span>
+		</div>
+		<div>
+			<p style="font-size: 10.5pt; line-height: 1.5;"></p>
+			<ul class=" list-paddingleft-2">
+				<li><span style="font-size: 10.5pt; line-height: 1.5;">userId，整型，用户唯一id</span><br></li>
+				<li><span style="font-size: 10.5pt; line-height: 1.5;">barCode，字符串，扫码的码值</span></li>
+			</ul>
+			<div>
+				<div>
+					<strong>Response：</strong>
+				</div>
+				<div>
+					status返回400 出错，错误原因查看message<strong><br></strong>
+				</div>
+				<p>status返回200 规则通过。</p>
+				<hr>
+				<p>
+					<a wiznote_tag="windows_bookmark" wiznote_add_time="1432951144257"
+						name="15.新任务在线推送接口&nbsp;newTasks"
+						style="background-color: rgb(0, 204, 255);">15.新任务在线推送接口&nbsp;newTasks</a><br>
+				</p>
+				<p>
+					<span style="white-space: normal;">说明：此接口是服务器主动推送，当系统中有新任务发布时，将新任务推送给玩家的任务任务视图中</span>
+				</p>
+				<div style="white-space: normal;">
+					<strong>Response：</strong>
+				</div>
+				<p style="white-space: normal;">status返回200&nbsp;</p>
+				<ul style="list-style-type: disc;" class=" list-paddingleft-2">
+					<li><p style="white-space: normal;">type，字符串，任务类型（目前只有"VIEW"，表示任务视图）</p></li>
+					<li><p style="white-space: normal;">tasks，任务数组，推送的任务。和第13接口的tasks是一样的</p></li>
+				</ul>
+				<p style="white-space: normal;">推送事例如下：</p>
+				<p>{"status":200,"time":1432792948,"message":"有新任务发布了","method":"newTasks","data":{"type":"VIEW","tasks":[{"difficulty":1,"score":10,"lng":116.38914,"title":"新任务推送测试３","taskId":43,"lat":39.92931,"info":"新任务推送测试３\nsb","clues":"新任务推送测试３"}]}}</p>
+				<p></p>
+				<hr>
+				<p></p>
+			</div>
+			<p></p>
+		</div>
+	</div>
+	<p>
+		<span style="background-color: rgb(0, 204, 255);"><a
+			wiznote_tag="windows_bookmark" wiznote_add_time="1432952642960"
+			name="16.已接受任务消息推送 taskMsg"></a><a wiznote_tag="windows_bookmark"
+			wiznote_add_time="1432951144257" name="15.新任务在线推送接口&nbsp;newTasks">16.</a><span
+			style="font-size: 10.5pt; line-height: 1.5;">已接受任务消息推送 taskMsg</span></span><br>
+	</p>
+	<p>说明：此接口是服务器主动推送。应用于已接受任务中有前置规则通过的时候的正反馈。</p>
+	<p>例如：一个线下任务有三个前置规则分别是道具完备性、GPS验证、扫码验证，如果有其中一项或者几项规则验证通过，该规则的正反馈推送给客户端。</p>
+	<div>
+		<strong>Response：</strong>
+	</div>
+	<p>status返回200&nbsp;</p>
+	<ul class=" list-paddingleft-2">
+		<li><span style="font-size: 10.5pt; line-height: 1.5;">taskId，整型，已接受任务的id</span><br></li>
+		<li><span style="font-size: 10.5pt; line-height: 1.5;">reply，回复数组</span><br></li>
+	</ul>
+	<div>示例：</div>
+	<div>
+		<div>
+			"<span style="font-size: 10.5pt; line-height: 1.5;">reply</span><span
+				style="font-size: 10.5pt; line-height: 1.5;">":[</span>
+		</div>
+		<div>{"html":"html文本1"},</div>
+		<div>
+			{"html":"html文本2"},<br>
+		</div>
+		<div>...</div>
+		<div>]</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</body>
+</html>

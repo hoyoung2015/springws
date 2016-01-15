@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthorizedController {
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
-        return "login";
+        return "authorized/login";
     }
 }

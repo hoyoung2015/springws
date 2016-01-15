@@ -1,5 +1,7 @@
 package net.hoyoung.springws.ws;
 
+import net.hoyoung.springws.ws.handler.SystemWebSocketHandler;
+import net.hoyoung.springws.ws.interceptor.HandshakeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -10,12 +12,6 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
-import com.wiipu.ws.domain.GameContext;
-import com.wiipu.ws.fb.FbContext;
-import com.wiipu.ws.fb.FbText;
-import com.wiipu.ws.handler.SystemWebSocketHandler;
-import com.wiipu.ws.interceptor.HandshakeInterceptor;
-import com.wiipu.ws.util.WebSockedUtils;
 
 @Configuration
 @EnableWebMvc
@@ -34,14 +30,6 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements
     @Bean
     public WebSocketHandler systemWebSocketHandler() {
         return new SystemWebSocketHandler();
-    }
-    @Bean
-    public WebSockedUtils wsUtils() {
-        return new WebSockedUtils();
-    }
-    @Bean
-    public GameContext gameContext() {
-        return new GameContext();
     }
     @Bean
     public ServletServerContainerFactoryBean createWebSocketContainer() {

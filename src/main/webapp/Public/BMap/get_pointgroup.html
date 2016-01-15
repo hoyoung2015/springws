@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>坐标点拾取工具</title>
+<style type="text/css">
+body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:14px;}
+#left{
+	float:left;
+	width:24%;
+	padding:5px;
+}
+#suggestId{
+	width:100%;
+	height:30px;
+	font-size: 14px;
+}	
+#pointsOutput{
+	width:100%;
+}
+p,h4{
+	margin:5px 0;
+}
+</style>
+<script type="text/javascript" src="./distance_files/api"></script>
+<script type="text/javascript" src="./distance_files/getscript">
+</script><link rel="stylesheet" type="text/css" href="./distance_files/bmap.css">
+<script type="text/javascript" src="./distance_files/DistanceTool.js"></script>
+<script type="text/javascript" src="../js/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+<div id="left">
+<div id="r-result">请输入地点（如：北京市天安门）:
+	<br/>
+	<input type="text" id="suggestId" size="20" value="" /></div>
+	<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+<div style="padding:5px 0">
+	<input type="button" value="开始拾取坐标" onclick="myDis.open();">
+<input type="button" value="关闭拾取" onclick="myDis.close()">
+<p>坐标输出：</p>
+<textarea id="pointsOutput" disabled="disabled" rows="16" cols="30"></textarea>
+<input type="button" value="复制坐标" id="btnCopy"/>
+</div>
+<div>
+	
+
+<h4>使用说明：</h4>
+<ol>
+	<li>定位地图后点击开始拾取坐标按钮</li>
+</ol>
+</div>	
+	</div>
+	
+<div style="width: 73%; height: 100%; float:right;border: 1px solid gray;  z-index: 0; color: rgb(0, 0, 0); text-align: left; background-color: rgb(243, 241, 236);" id="container"><div style="overflow: visible; position: absolute; z-index: 0; left: 0px; top: 0px; cursor: url(http://api.map.baidu.com/images/openhand.cur) 8 8, default;"><div class="BMap_mask" style="position: absolute; left: 0px; top: 0px; z-index: 9; overflow: hidden; -webkit-user-select: none; width: 520px; height: 340px;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 800;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 700;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 600;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 500;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 400;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 300;"></div><div style="position: absolute; height: 0px; width: 0px; left: 0px; top: 0px; z-index: 200;"></div></div><div style="position: absolute; top: 0px; left: 0px; z-index: 1;"><div style="position: absolute; z-index: -100; left: 260px; top: 170px;"><img src="./distance_files/saved_resource" style="position: absolute; border: none; width: 256px; height: 256px; left: -60px; top: -152px; opacity: 1;"><img src="./distance_files/saved_resource(1)" style="position: absolute; border: none; width: 256px; height: 256px; left: -316px; top: -152px; opacity: 1;"><img src="./distance_files/saved_resource(2)" style="position: absolute; border: none; width: 256px; height: 256px; left: 196px; top: -152px; opacity: 1;"><img src="./distance_files/saved_resource(3)" style="position: absolute; border: none; width: 256px; height: 256px; left: -60px; top: 104px; opacity: 1;"><img src="./distance_files/saved_resource(4)" style="position: absolute; border: none; width: 256px; height: 256px; left: -60px; top: -408px; opacity: 1;"><img src="./distance_files/saved_resource(5)" style="position: absolute; border: none; width: 256px; height: 256px; left: -316px; top: 104px; opacity: 1;"><img src="./distance_files/saved_resource(6)" style="position: absolute; border: none; width: 256px; height: 256px; left: -316px; top: -408px; opacity: 1;"><img src="./distance_files/saved_resource(7)" style="position: absolute; border: none; width: 256px; height: 256px; left: 196px; top: 104px; opacity: 1;"><img src="./distance_files/saved_resource(8)" style="position: absolute; border: none; width: 256px; height: 256px; left: 196px; top: -408px; opacity: 1;"></div></div><div style="position: absolute; top: 0px; left: 0px; z-index: 2;"></div></div><div class=" anchorBL" style="height: 32px; position: absolute; z-index: 10; bottom: 0px; right: auto; top: auto; left: 1px;"><a title="到百度地图查看此区域" target="_blank" href="http://map.baidu.com/?sr=1" style="outline: none;"><img style="border:none;width:77px;height:32px" src="./distance_files/copyright_logo.png"></a></div><div id="zoomer" style="position:absolute;z-index:0;top:0px;left:0px;overflow:hidden;visibility:hidden;cursor:url(http://api.map.baidu.com/images/openhand.cur) 8 8,default"><div class="BMap_zoomer" style="top:0;left:0;"></div><div class="BMap_zoomer" style="top:0;right:0;"></div><div class="BMap_zoomer" style="bottom:0;left:0;"></div><div class="BMap_zoomer" style="bottom:0;right:0;"></div></div><div unselectable="on" class=" BMap_cpyCtrl anchorBL" style="cursor: default; white-space: nowrap; color: black; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 11px; line-height: 15px; font-family: arial, sans-serif; bottom: 2px; right: auto; top: auto; left: 81px; position: absolute; z-index: 10; background: none;"><span _cid="1"></span></div></div>
+
+
+<script type="text/javascript">
+function G(id) {
+		return document.getElementById(id);
+	}
+var map = new BMap.Map("container");
+map.enableScrollWheelZoom();//启用滚轮放大缩小
+map.centerAndZoom(new BMap.Point(116.423241,39.931093), 16);
+var myDis = new BMapLib.DistanceTool(map,{
+	
+});
+
+
+var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+		{"input" : "suggestId"
+		,"location" : map
+	});
+ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+	var str = "";
+		var _value = e.fromitem.value;
+		var value = "";
+		if (e.fromitem.index > -1) {
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		
+		value = "";
+		if (e.toitem.index > -1) {
+			_value = e.toitem.value;
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+		G("searchResultPanel").innerHTML = str;
+	});
+
+	var myValue;
+	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+		
+		setPlace();
+	});	
+	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+		$("#pointsOutput").val("");//清空坐标
+		setPlace();
+	});
+	function setPlace(){
+		map.clearOverlays();    //清除地图上所有覆盖物
+		function myFun(){
+			var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+			map.centerAndZoom(pp, 16);
+			map.addOverlay(new BMap.Marker(pp));    //添加标注
+		}
+		var local = new BMap.LocalSearch(map, { //智能搜索
+		  onSearchComplete: myFun
+		});
+		local.search(myValue);
+	}
+// 如果要调试事件接口，请打开下方屏蔽代码，
+// 在firefox或者chrome下查看调试信息
+myDis.addEventListener("addpoint", function(e) {
+	var $p = $("#pointsOutput");
+	var points = $p.data("points");
+	if(!points){
+		points = new Array();
+	}
+	var pp = {
+			id : Math.round(Math.random()*10000),
+			lng : e.point.lng,
+			lat : e.point.lat
+		}
+	pp.info = "地点"+pp.id+"|"+pp.lng+","+pp.lat;
+	points.push(pp);
+	$p.data("points",points);
+	$p.val(JSON.stringify(points));
+});
+myDis.addEventListener("drawend", function(e) {
+	// console.log("drawend");
+	// console.log(e.points);
+	// console.log(e.overlays);
+	// console.log(e.distance);
+	//me._map.addOverlay(path)
+});
+
+
+
+myDis.addEventListener("removepolyline", function(e) {
+	$("#pointsOutput").val("");
+});
+myDis.addEventListener("clearOverlays", function(e) {
+	$("#pointsOutput").val("");
+});
+$("#btnCopy").click(function(){
+		var s = $("#pointsOutput").val();
+		s = s.replace(" ","");
+		if(s){
+			copyToClipboard(s);
+		}else{
+			alert("坐标是空的");
+		}
+});
+function copyToClipboard(maintext){
+	  if (window.clipboardData){
+	    window.clipboardData.setData("Text", maintext);
+	    }else if (window.netscape){
+	      try{
+	        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+	    }catch(e){
+	        alert("该浏览器不支持一键复制！n请手工复制文本框链接地址～");
+	    }
+	    var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+	    if (!clip) return;
+	    var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+	    if (!trans) return;
+	    trans.addDataFlavor('text/unicode');
+	    var str = new Object();
+	    var len = new Object();
+	    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+	    var copytext=maintext;
+	    str.data=copytext;
+	    trans.setTransferData("text/unicode",str,copytext.length*2);
+	    var clipid=Components.interfaces.nsIClipboard;
+	    if (!clip) return false;
+	    clip.setData(trans,null,clipid.kGlobalClipboard);
+	  }
+	  alert("坐标点集已经复制到剪贴板中"+maintext);
+	}
+</script></body></html>
